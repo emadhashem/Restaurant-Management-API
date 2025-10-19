@@ -24,17 +24,8 @@ export class UsersService {
    * Creates a new user.
    */
   async create(createUserDto: CreateUserDto): Promise<User> {
-    try {
-      const createdUser = new this.userModel(createUserDto);
-      return createdUser.save();
-    } catch (error) {
-      if (error.code === 11000) {
-        throw new BadRequestException(
-          'A user with the same name already exists.',
-        );
-      }
-      throw new BadRequestException(error.message);
-    }
+    const createdUser = new this.userModel(createUserDto);
+    return await createdUser.save();
   }
 
   /**

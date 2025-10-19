@@ -37,7 +37,7 @@ export class RestaurantsService {
       };
 
       const createdRestaurant = new this.restaurantModel(restaurantData);
-      return createdRestaurant.save();
+      return await createdRestaurant.save();
     } catch (error) {
       if (error.code === 11000) {
         throw new BadRequestException(
@@ -53,7 +53,7 @@ export class RestaurantsService {
    */
   async findAll(filters: FilterRestaurantDto): Promise<Restaurant[]> {
     const query = filters.cuisine ? { cuisines: filters.cuisine } : {};
-    return this.restaurantModel.find(query).exec();
+    return await this.restaurantModel.find(query).exec();
   }
 
   /**
@@ -63,7 +63,7 @@ export class RestaurantsService {
     const query = isValidObjectId(idOrSlug)
       ? { _id: idOrSlug }
       : { slug: idOrSlug };
-    return this.restaurantModel.findOne(query).exec();
+    return await this.restaurantModel.findOne(query).exec();
   }
 
   /**
@@ -73,7 +73,7 @@ export class RestaurantsService {
   async findNearby(lon: number, lat: number): Promise<Restaurant[]> {
     const ONE_KILOMETER_IN_METERS = 1000;
 
-    return this.restaurantModel
+    return await this.restaurantModel
       .find({
         location: {
           $near: {
