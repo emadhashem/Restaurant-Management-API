@@ -1,0 +1,20 @@
+# This file tells Docker to ignore certain files and directories when building the image.
+# This helps to keep the image small and avoids copying sensitive information.
+
+# Ignore node modules, as they will be installed inside the container
+node_modules
+
+# Ignore build output directory
+dist
+
+# Ignore environment files
+.env
+
+# Ignore git and docker files
+.git
+.gitignore
+Dockerfile
+docker-compose.yml
+
+# Ignore documentation
+README.md
