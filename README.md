@@ -30,8 +30,8 @@ This project is fully containerized, allowing you to run the entire application 
 
 1. Clone the repository:
 ```bash
-git clone <your-repository-url>
-cd <repository-directory>
+git clone https://github.com/emadhashem/Restaurant-Management-API.git
+cd <folder-name>
 ```
 
 2. Build and Run Containers:
@@ -63,7 +63,7 @@ docker-compose up --build -d
   cp .env.example .env
   
     - Update the .env file with your MongoDB connection string and other configurations.
-    - MONGODB_URI=mongodb://localhost:27017/pleny-assessment
+    - MONGODB_URI=mongodb://root:examplepassword@localhost:27017/pleny-assessment?authSource=admin
     - PORT=3000
 ```
 
