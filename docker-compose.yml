@@ -1,0 +1,49 @@
+# Docker Compose file for setting up the full application stack for local development.
+# To run: docker-compose up --build -d
+# To stop: docker-compose down
+
+version: '3.8'
+
+services:
+  # NestJS API Service
+  api:
+    # Build the Docker image from the Dockerfile in the current directory
+    build: .
+    container_name: pleny_api
+    restart: always
+    ports:
+      # Map port 3000 on the host to port 3000 in the container
+      - '3000:3000'
+    environment:
+      # The MONGODB_URI uses the service name 'mongo' which is resolvable on the Docker network.
+      MONGODB_URI: mongodb://root:examplepassword@mongo:27017/pleny-assessment?authSource=admin
+    # Ensure the 'mongo' service is started before the 'api' service
+    depends_on:
+      - mongo
+    networks:
+      - pleny-net
+
+  # MongoDB Service
+  mongo:
+    image: mongo:latest
+    container_name: pleny_mongodb
+    restart: always
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: examplepassword
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - pleny-net
+
+# Define the named volume for data persistence
+volumes:
+  mongodata:
+    driver: local
+
+# Define the custom bridge network for communication between services
+networks:
+  pleny-net:
+    driver: bridge
